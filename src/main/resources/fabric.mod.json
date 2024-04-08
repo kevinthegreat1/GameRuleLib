@@ -1,0 +1,39 @@
+{
+	"schemaVersion": 1,
+	"id": "gamerulelib",
+	"version": "${version}",
+	"name": "Game Rule Lib",
+	"description": "Library for optionally syncing game rules to the client",
+	"authors": [
+		"Kevinthegreat"
+	],
+	"contact": {
+		"homepage": "https://github.com/kevinthegreat1/GameRuleLib",
+		"sources": "https://github.com/kevinthegreat1/GameRuleLib",
+		"issues": "https://github.com/kevinthegreat1/GameRuleLib/issues"
+	},
+	"license": "GPL-3.0-or-later",
+	"icon": "assets/gamerulelib/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.kevinthegreat.gamerulelib.GameRuleLib"
+		],
+		"client": [
+			"com.kevinthegreat.gamerulelib.GameRuleLibClient"
+		]
+	},
+	"mixins": [
+		"gamerulelib.mixins.json",
+		{
+			"config": "gamerulelib.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.9",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
