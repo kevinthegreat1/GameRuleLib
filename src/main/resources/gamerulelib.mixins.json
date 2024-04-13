@@ -3,6 +3,7 @@
 	"package": "com.kevinthegreat.gamerulelib.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
+		"GameRulesTypeAccessorMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
