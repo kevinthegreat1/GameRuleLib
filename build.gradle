@@ -73,6 +73,8 @@ jar {
 publishing {
 	publications {
 		create("mavenJava", MavenPublication) {
+			groupId = "com.kevinthegreat"
+			artifactId = project.archives_base_name
 			from components.java
 		}
 	}
