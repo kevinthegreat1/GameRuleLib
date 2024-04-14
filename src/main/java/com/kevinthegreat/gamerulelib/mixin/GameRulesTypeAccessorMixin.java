@@ -10,13 +10,13 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import java.util.function.BiConsumer;
 
 @Mixin(GameRules.Type.class)
-public interface GameRulesTypeAccessorMixin extends GameRulesTypeAccessor {
+public interface GameRulesTypeAccessorMixin<T extends GameRules.Rule<T>> extends GameRulesTypeAccessor<T> {
     @Accessor
     @Override
-    <T extends GameRules.Rule<T>> BiConsumer<MinecraftServer, T> getChangeCallback();
+    BiConsumer<MinecraftServer, T> getChangeCallback();
 
     @Mutable
     @Accessor
     @Override
-    <T extends GameRules.Rule<T>> void setChangeCallback(BiConsumer<MinecraftServer, T> changeCallback);
+    void setChangeCallback(BiConsumer<MinecraftServer, T> changeCallback);
 }

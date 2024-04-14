@@ -5,8 +5,8 @@ import net.minecraft.world.GameRules;
 
 import java.util.function.BiConsumer;
 
-public interface GameRulesTypeAccessor {
-    default <T extends GameRules.Rule<T>> BiConsumer<MinecraftServer, T> getChangeCallback() {return null;}
+public interface GameRulesTypeAccessor<T extends GameRules.Rule<T>> {
+    default BiConsumer<MinecraftServer, T> getChangeCallback() {return null;}
 
-    default <T extends GameRules.Rule<T>> void setChangeCallback(BiConsumer<MinecraftServer, T> changeCallback) {}
+    default void setChangeCallback(BiConsumer<MinecraftServer, T> changeCallback) {}
 }

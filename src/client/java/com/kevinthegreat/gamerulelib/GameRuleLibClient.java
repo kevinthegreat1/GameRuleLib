@@ -12,8 +12,12 @@ public class GameRuleLibClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientPlayNetworking.registerGlobalReceiver(GameRuleUpdateS2CPacket.TYPE, (packet, player, responseSender) ->
-                MinecraftClient.getInstance().execute(() -> player.clientWorld.getGameRules().get(new GameRules.Key(packet.name(), null)).invokeDeserialize(packet.value()))
+                MinecraftClient.getInstance().execute(() -> {
+                    GameRules.Rule rule = player.clientWorld.getGameRules().get(new GameRules.Key(packet.name(), null));
+                    rule.invokeDeserialize(packet.value());
+                    rule.getType().getChangeCallback().accept(null, rule);
+                })
         );
-        GameRuleLib.LOGGER.info(GameRuleLib.MOD_NAME + "initialized");
+        GameRuleLib.LOGGER.info(GameRuleLib.MOD_NAME + " client initialized");
     }
 }

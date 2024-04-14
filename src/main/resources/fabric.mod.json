@@ -16,6 +16,9 @@
 	"icon": "assets/gamerulelib/icon.png",
 	"environment": "*",
 	"entrypoints": {
+		"main": [
+			"com.kevinthegreat.gamerulelib.impl.GameRuleLib"
+		],
 		"client": [
 			"com.kevinthegreat.gamerulelib.GameRuleLibClient"
 		]
@@ -29,8 +32,8 @@
 	],
 	"custom": {
 		"loom:injected_interfaces": {
-			"net/minecraft/class_1928\u0024class_4314": ["com/kevinthegreat/gamerulelib/impl/GameRulesTypeAccessor"],
-			"net/minecraft/class_1928\u0024class_4315": ["com/kevinthegreat/gamerulelib/impl/GameRulesRuleAccessor"]
+			"net/minecraft/class_1928\u0024class_4314": ["com/kevinthegreat/gamerulelib/impl/GameRulesTypeAccessor<TT;>"],
+			"net/minecraft/class_1928\u0024class_4315": ["com/kevinthegreat/gamerulelib/impl/GameRulesRuleAccessor<TT;>"]
 		}
 	},
 	"depends": {
