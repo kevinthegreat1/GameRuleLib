@@ -1,30 +1,22 @@
 package com.kevinthegreat.gamerulelib.impl;
 
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.GameRules;
 
-public record GameRuleUpdateS2CPacket(String name, String value) implements FabricPacket {
-    public static final PacketType<GameRuleUpdateS2CPacket> TYPE = PacketType.create(Identifier.of(GameRuleLib.MOD_ID, "game_rule_update"), GameRuleUpdateS2CPacket::new);
+public record GameRuleUpdateS2CPacket(String name, String value) implements CustomPayload {
+    public static final CustomPayload.Id<GameRuleUpdateS2CPacket> PACKET_ID = new CustomPayload.Id<>(new Identifier(GameRuleLib.MOD_ID, "game_rule_update"));
+    public static final PacketCodec<RegistryByteBuf, GameRuleUpdateS2CPacket> PACKET_CODEC = PacketCodec.tuple(PacketCodecs.STRING, GameRuleUpdateS2CPacket::name, PacketCodecs.STRING, GameRuleUpdateS2CPacket::value, GameRuleUpdateS2CPacket::new);
 
     public GameRuleUpdateS2CPacket(String name, GameRules.Rule<?> rule) {
         this(name, rule.serialize());
     }
 
-    public GameRuleUpdateS2CPacket(PacketByteBuf buf) {
-        this(buf.readString(), buf.readString());
-    }
-
     @Override
-    public void write(PacketByteBuf buf) {
-        buf.writeString(name);
-        buf.writeString(value);
-    }
-
-    @Override
-    public PacketType<?> getType() {
-        return TYPE;
+    public Id<? extends CustomPayload> getId() {
+        return PACKET_ID;
     }
 }

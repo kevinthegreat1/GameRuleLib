@@ -2,6 +2,7 @@ package com.kevinthegreat.gamerulelib.impl;
 
 import com.kevinthegreat.gamerulelib.api.v1.SyncedGameRuleRegistry;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.MinecraftServer;
@@ -30,6 +31,7 @@ public class GameRuleLib implements ModInitializer {
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public void onInitialize() {
+        PayloadTypeRegistry.playS2C().register(GameRuleUpdateS2CPacket.PACKET_ID, GameRuleUpdateS2CPacket.PACKET_CODEC);
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             for (String name : SyncedGameRuleRegistry.getSyncedGameRules()) {
                 ServerPlayNetworking.send(handler.player, new GameRuleUpdateS2CPacket(name, server.getGameRules().get(new GameRules.Key(name, null))));

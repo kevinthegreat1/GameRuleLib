@@ -8,13 +8,14 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.world.GameRules;
 
 public class GameRuleLibClient implements ClientModInitializer {
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings("unchecked")
     @Override
     public void onInitializeClient() {
-        ClientPlayNetworking.registerGlobalReceiver(GameRuleUpdateS2CPacket.TYPE, (packet, player, responseSender) ->
+        ClientPlayNetworking.registerGlobalReceiver(GameRuleUpdateS2CPacket.PACKET_ID, (payload, context) ->
                 MinecraftClient.getInstance().execute(() -> {
-                    GameRules.Rule rule = player.clientWorld.getGameRules().get(new GameRules.Key(packet.name(), null));
-                    rule.invokeDeserialize(packet.value());
+                    @SuppressWarnings({"DataFlowIssue", "rawtypes", "resource"})
+                    GameRules.Rule rule = context.client().world.getGameRules().get(new GameRules.Key(payload.name(), null));
+                    rule.invokeDeserialize(payload.value());
                     rule.getType().getChangeCallback().accept(null, rule);
                 })
         );
